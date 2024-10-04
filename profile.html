@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="container">
+    <h3>{{ user_profile.user.username }}'s Profile</h3>
+    
+    <div class="profile-info">
+        <div>
+            {% if user_profile.profile_picture %}
+            <img src="{{ user_profile.profile_picture.url }}" alt="Profile Image" class="profile-image">
+           {% endif %}
+        </div>
+        <span>Name: {{ user_profile.user.username }}</span><br>
+        <span>Email: {{ user_profile.user.email }}</span><br>
+        <span>Role: {{ user_profile.user.role }}</span> <!-- Ensure role is accessible -->
+    </div>
+    
+    <a href="{% url 'update-profile' %}">Edit Profile</a>
+</div> <!-- Closing the container div -->
+<style>
+    .profile-image {
+        width: 200px; /* Adjust size as needed */
+        height: 200px; /* Adjust size as needed */
+        border-radius: 25%; /* Circular image */
+        margin-bottom: 10px; /* Space below the image */
+    }
+</style>
+{% endblock %}

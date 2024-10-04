@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Store Details{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="columnn">
+        <section>
+            <div>
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Work Date</th>
+                            <th>Available Product</th>
+                            <th>Available Employee</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ store.name }}</td>
+                            <td>{{ store.address }}</td>
+                            <td>{{ store.work_date }}</td>
+                            <td><a href="{% url 'available-product' pk=store.pk %}" class="store-link">Available Products</a></td>
+                            <td><a href="{% url 'available-employee' pk=store.pk %}" class="store-link">Available Employees</a></td>
+                            <td>
+                                <a href="{% url 'update-store' pk=store.pk %}" class="btn">Update</a>
+                                <a href="{% url 'delete-store' pk=store.pk %}" class="btn">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="{{ request.META.HTTP_REFERER }}" class="back-link">Back</a>
+            </div>
+            <div class="store-actions">
+                <!-- Additional actions can go here -->
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+    /* Remove underline from all links */
+    a {
+        text-decoration: none; /* Remove underline from all links */
+        color: #007bff; /* Default link color */
+    }
+    a:hover {
+        text-decoration: none; /* Optional: Underline on hover */
+        color: blue; /* Optional: Change color on hover */
+    }
+    .btn {
+        /* Add any additional button styles here */
+    }
+</style>
+{% endblock %}

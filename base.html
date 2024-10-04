@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Store Management{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Basic styles for the nav */
+        nav {
+            display: flex;
+            align-items: center; /* Align items vertically in the center */
+            justify-content: space-between; /* Space between items */
+            margin-top: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px; /* Increased padding for better height */
+            background-color: #add8e3; /* Light blue background color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .home {
+            margin-right: auto; /* Push home link to the left */
+            color: white; /* Set "Home" text color to white */
+        }
+        nav a {
+            text-decoration: none; /* Remove underline from all links in the nav */
+            color: #007bff; /* Set link color */
+        }
+        nav a:hover {
+            color: blue; /* Change color on hover */
+            background-color: rgb(213, 217, 217);
+        }
+        .profile {
+            width: 50px; /* Profile image size */
+            height: 50px; /* Profile image size */
+            border-radius: 50%; /* Make the image circular */
+            margin-right: 10px; /* Space between image and button */
+        }
+        .login_page {
+            width: 60px; /* Login page image size */
+            height: 60px; /* Login page image size */
+            border-radius: 50%; /* Make the image circular */
+            margin-right: 10px; /* Space between image and button */
+        }
+        button {
+            background-color: transparent; /* Button background */
+            border: none; /* Remove default border */
+            cursor: pointer; /* Pointer cursor on hover */
+            color: red; /* Button text color */
+            font-size: 16px; /* Font size */
+        }
+        button:hover {
+            background-color: red; /* Background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="{% static 'image/ASTU.png' %}" alt="LOGO" class="login_page">
+            <div class="home">
+                <a href="{% url 'home' %}">Home</a>
+            </div>
+            {% if request.user.is_authenticated %}
+                <div style="display: flex; align-items: center;">
+                    <a href="{% url 'profile' pk=request.user.pk %}">
+                        {% if request.user.userprofile.profile_picture %}  
+                            <img class='profile' src="{{ request.user.userprofile.profile_picture.url }}" alt="Profile Image">
+                        {% else %}
+                            <img class='profile' src="{% static 'image/default_profile.png' %}" alt="Default Profile Image">
+                        {% endif %}
+                    </a>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}">Register</a>
+                </div>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Store Management.</p>
+    </footer>
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Search Products by Category{% endblock %}
+{% block content %}
+<div class="product-details">
+    {% if products %}
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Model</th>
+                    <th>Manufacturer</th>
+                    <th>Quantity</th>
+                    <th>Serial Number</th>
+                    <th>Produced Date</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.model }}</td>
+                        <td>{{ product.manufacturer }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.serial_number }}</td>
+                        <td>{{ product.produced_date }}</td>
+                        <td>{{ product.price }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No products found for this category.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Please enter a category to search for products.</p>
+    {% endif %}
+    
+    <div class="product-info">
+        {% if product %}
+            <div class="product-photo">
+                {% if product.photo %}
+                    <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <p>No photo available</p>
+                {% endif %}
+            </div>
+            <div class="product-description">
+                <h3>Description:</h3>
+                <p>{{ product.description }}</p>
+                <div class="store-actions">
+                    <a href="{% url 'update-product' pk=product.pk %}" class="btn">Update</a>
+                    <a href="{% url 'delete-product' pk=product.pk %}" class="btn">Delete</a>
+                </div>
+            </div>
+            <a href="{{request.META.HTTP_REFERER}}">Back</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

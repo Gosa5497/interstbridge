@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Transaction Request</title>
+</head>
+<body>
+    <p>Dear {{ manager.user.get_full_name }},</p>
+    <p>A new transaction request has been submitted:</p>
+    <p><strong>Product:</strong> {{ request.product.name }}</p>
+    <p><strong>Quantity:</strong> {{ request.quantity }}</p>
+    <p><strong>Store:</strong> {{ request.store.name }}</p>
+    <p>Please take action on the transaction request:</p>
+    <a href="{{ approve_url }}" class="btn btn-success">Approve</a>
+    <br>
+    <a href="{{ reject_url }}" class="btn btn-danger">Reject</a>       
+    <p>Thank you!</p>
+</body>
+</html>

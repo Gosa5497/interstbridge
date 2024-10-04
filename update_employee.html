@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated and user.is_superuser %}
+  <h2>Update Employee</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+  </form>
+  {% else %}
+  <p>You don't have permission to Update this Employee</p>
+{% endif %}
+{% endblock %}

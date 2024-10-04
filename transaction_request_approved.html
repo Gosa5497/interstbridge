@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction Request Approved</title>
+</head>
+<body>
+    <p>Dear {{ storekeeper.user.get_full_name }},</p>
+    <p>The transaction request for the following product has been approved:</p>
+    <p><strong>Product:</strong> {{ request.product.name }}</p>
+    <p><strong>Quantity:</strong> {{ request.quantity }}</p>
+    <p><strong>Store:</strong> {{ request.store.name }}</p>
+    <p>Please take the necessary actions to process this request.</p>
+    <p>Thank you!</p>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction Request Rejected</title>
+</head>
+<body>
+    <p>Dear {{ request.user.get_full_name }},</p>
+    <p>Unfortunately, your transaction request for the following product has been rejected:</p>
+    <p><strong>Product:</strong> {{ request.product.name }}</p>
+    <p><strong>Quantity:</strong> {{ request.quantity }}</p>
+    <p><strong>Store:</strong> {{ request.store.name }}</p>
+    <p>Thank you for your understanding.</p>
+    <p>Best regards,</p>
+    <p>Your Store Team</p>
+</body>
+</html>

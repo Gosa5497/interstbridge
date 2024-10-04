@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Employees in Store{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="columnn">
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4><i>Employees Working Here</i></h4>
+                <a href="{% url 'add-employee' %}" class="btn" style="text-decoration: none;">Add</a>
+            </div>
+                
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Date of Joining</th>
+                        <th>Operations</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td><a href="{% url 'employee-details' pk=employee.pk %}" class="employee-link">{{ employee.first_name }} {{ employee.last_name }}</a></td>
+                        <td>{{ employee.role }}</td>
+                        <td>{{ employee.date_of_joining }}</td>
+                        <td>
+                            <a href="{% url 'update_employee' pk=employee.pk %}" class="btn">Update</a>
+                            <a href="{% url 'delete-employee' pk=employee.pk %}" class="btn">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ request.META.HTTP_REFERER }}" class="back-link" style="text-decoration: none;">Back</a>
+        </div>
+    </section>
+</div>
+
+<style>
+    /* Remove underline from all links */
+    a {
+        text-decoration: none; /* Remove underline */
+        color: #007bff; /* Default link color */
+    }
+    a:hover {
+        text-decoration: none; /* Optional: Underline on hover */
+        color: blue; /* Optional: Change color on hover */
+    }
+    .btn {
+        /* Add any additional button styles here */
+    }
+</style>
+{% endblock %}

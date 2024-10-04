@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+<div class="product-details">
+    {% if products %}
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Model</th>
+                    <th>Manufacturer</th>
+                    <th>Quantity</th>
+                    <th>Serial Number</th>
+                    <th>Produced Date</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.model }}</td>
+                        <td>{{ product.manufacturer }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.serial_number }}</td>
+                        <td>{{ product.produced_date }}</td>
+                        <td>{{ product.price }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No products found for this category.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Please enter a category to search for products.</p>
+    {% endif %}
+    <a href="{{request.META.HTTP_REFERER}}" >Go Back</a>
+</div>
+{% endblock %}

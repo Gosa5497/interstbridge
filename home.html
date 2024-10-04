@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section>
+    <img class='img' src="{% static 'image/store.png' %}" alt="System Image">
+</section>
+<div class="row">
+    <section>
+        <div class="column">
+            <div>
+                <h3>Available Stores</h3>
+                <a href="{% url 'all_stores' %}" class="btn">All</a>
+                <ul>
+                    {% for store in stores %}
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'store-details' pk=store.pk %}">{{ store.name }}</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a href="{% url 'add-store' %}" class="ad">Add</a> 
+        </div>
+    </section>
+    <section>
+        <div class="column">
+            <div>
+                <h3><i>Available Products</i></h3>
+                <ul>
+                    {% for product in products %}
+                        <li>
+                            {% if user.is_authenticated %}
+                            {{ product.name }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="column">
+            <div>
+                <h3>Available Employees</h3>
+                <ul>
+                    {% for employee in employees %}
+                        <li>
+                            {% if user.is_authenticated %}
+                                {{ employee.first_name }} {{ employee.last_name }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="column">
+            <h3>Recent Activities</h3>
+            <a href="{% url 'request_transaction' %}" class="btn">Request Transaction</a>
+            <ul>
+                {% for request in transaction_requests %}
+                <li>
+                    <div>
+                        <a href="{% url 'transaction-request-details' pk=request.id %}">{{ request.product.name }}</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+</div>
+
+<style>
+    /* Remove underline from specific links */
+    a {
+        text-decoration: none; /* Remove underline from all links */
+        color: #007bff; /* Set link color */
+    }
+    a:hover {
+        text-decoration: none; /* Underline on hover */
+        color:blue;
+    }
+</style>
+{% endblock %}

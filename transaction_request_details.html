@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Transaction Request Details</h2>
+    <table class="employee-table">
+        <thead>
+            <tr>
+                <th>Name of product</th>
+                <th>Requester</th>
+                <th>Transaction Amount</th> 
+                <th>Store Name</th>
+                <th>Status</th>
+                <th>Requested on</th>
+                {% if request.approved_by %}
+               <th><strong>Approved By:</strong></th>
+               {%endif%}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ request.product.name }}</td>
+                <td>{{ request.user.username }}</td>
+                <td>{{ request.quantity }}</td>
+                <td>{{ request.store.name }}</td>
+                <td>{{ request.get_status_display }}</td>
+                <td>{{ request.request_date|date:"F j, Y, g:i a" }}</td>
+                {% if request.approved_by %}
+               <td>{{ request.approved_by.get_full_name }}</td>
+                {% endif %}
+        </tbody>
+    </table>    
+    <a href="{% url 'manage_transaction_requests' %}" class="btn btn-primary">Back to Requests</a>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Manage Transaction Requests</h2>
+    {% if transaction_requests %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Requester</th>
+                    <th>Store</th>
+                    <th>Requested Amount</th>
+                    <th>Status</th>
+                    <th> Requester Confirmation</th>
+                    <th>Storekeeper Confirmation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in transaction_requests %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ request.user.username }}</td>
+                        <td>{{ request.store.name }}</td>
+                        <td>{{ request.quantity }}</td>
+                        <td>{{ request.get_status_display }}</td>
+                        <td>
+                            {%if request.status == 'approved'%}
+                            {% if request.storekeeper_confirmation %}
+                            {% if request.user_confirmation %}
+                                <span class="badge bg-success">Receipted</span>
+                            {% else %}
+                                <form method="POST" action="{% url 'confirm_user' request.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Confirm Receipt</button>
+                                </form>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %} 
+                        </td>
+                        <td>
+                            {%if request.status == 'approved'%}
+                            {% if request.storekeeper_confirmation %}
+                                <span class="badge bg-success">Delivered</span>
+                            {% else %}
+                                <form method="POST" action="{% url 'confirm_storekeeper' request.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" aria-label="Confirm Delivery">Confirm Delivery</button>
+                                </form>
+                            {% endif %}
+                            {%endif%}
+                        </td>                        
+                        <td>
+                            {% if request.status == 'pending' %}
+                                <a href="{% url 'approve_transaction_request' request.pk %}" class="btn btn-success">Approve</a>
+                                <a href="{% url 'reject_transaction_request' request.pk %}" class="btn btn-danger">Reject</a>
+                            {% else %}
+                                {% if request.status == 'approved' %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% elif request.status == 'rejected' %}
+                                    <span class="badge bg-danger">Not Approved</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No transaction requests to display.</p>
+    {% endif %}
+    <a href="{{request.META.HTTP_REFERER}}" >Back</a>
+</div>
+{% endblock %}

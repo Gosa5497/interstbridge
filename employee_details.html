@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Employee Details{% endblock %}
+
+{% block content %}
+<div class="employee-details">
+    <table class="employee-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Date of Joining</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+                <td>{{ employee.role }}</td>
+                <td>{{ employee.date_of_joining }}</td>
+             </tr>
+        </tbody>
+    </table>
+
+    {% if employee.profile_photo %}
+    <div class="employee-photo">
+        <img src="{{ employee.profile_photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
+        <div class="store-actions">
+            <a href="{% url 'update_employee' pk=employee.pk %}" class="btn">Update</a>
+            <a href="{% url 'delete-employee' pk=employee.pk%}" class="btn">Delete</a>
+        </div>
+        <a href="{{request.META.HTTP_REFERER}}" >back</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

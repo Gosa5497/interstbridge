@@ -1,0 +1,18 @@
+<!-- templates/myapp/update_profile.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Profile</title>
+</head>
+<body>
+    <h1>Update Profile</h1>
+    <form action="{% url 'update-profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">save</button>
+    </form>    
+    <a href="{% url 'profile' pk=user.pk %}">Cancel</a>
+</body>
+</html>

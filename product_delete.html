@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated and user.is_superuser %}
+  <form method="post">
+    {% csrf_token %}
+    <h2>Are you sure you want to delete "{{ product.name }}"?</h2>
+    <a href="{{request.META.HTTP_REFERER}}" >Go Back</a>
+    <input type='submit' value='Confirm'>
+  </form>
+  {% else %}
+  <p>You don't have permission to delete this product</p>
+{% endif %}
+{% endblock %}

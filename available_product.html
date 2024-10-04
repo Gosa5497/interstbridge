@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Products in Store{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="columnn">
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4><i>Products in this Store</i></h4>
+                <form method="GET" action="{% url 'search_products' %}">
+                    <input type="text" name="category" placeholder="Enter category" required>
+                    <button type="submit">Search</button>
+                </form>
+                <a href="{% url 'add-product' %}" class="ad">Add</a>
+            </div>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Model</th>
+                        <th>Manufacturer</th>
+                        <th>Quantity</th>
+                        <th>Serial Number</th>
+                        <th>Produced Date</th>
+                        <th>Price</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td><a href="{% url 'product-details' pk=product.pk %}" class="product-link">{{ product.name }}</a></td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.model }}</td>
+                        <td>{{ product.manufacturer }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.serial_number }}</td>
+                        <td>{{ product.produced_date }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <a href="{% url 'update-product' pk=product.pk %}" class="btn">Update</a>
+                            <a href="{% url 'delete-product' pk=product.pk %}" class="btn">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ request.META.HTTP_REFERER }}" class="back-link">Back</a>
+        </div>
+    </section>
+</div>
+
+<style>
+    /* Remove underline from all links */
+    a {
+        text-decoration: none; /* Remove underline from all links */
+        color: #007bff; /* Default link color */
+    }
+    a:hover {
+        text-decoration: none; /* Optional: Underline on hover */
+        color: blue; /* Optional: Change color on hover */
+    }
+    .btn {
+        /* Add any additional button styles here */
+    }
+</style>
+{% endblock %}
